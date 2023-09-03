@@ -10,7 +10,7 @@
     Height="450"
     mc:Ignorable="d">
     <Grid>
-        <DockPanel>
+        <DockPanel Margin="-1,1,1,-1">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" />
@@ -23,29 +23,63 @@
             <TextBox AcceptsReturn="True" />
             <DataGrid
                 Name="moomin"
-                Width="472"
-                Height="295"
-                AlternatingRowBackground="#FFEFADAD"
+                Width="733"
+                Height="296"
+                AlternatingRowBackground="#FFF7F1F1"
                 AutoGenerateColumns="False"
                 RenderTransformOrigin="0.5,0.5"
-                RowBackground="#FF67A579"
                 ScrollViewer.CanContentScroll="True"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                ScrollViewer.VerticalScrollBarVisibility="Auto">
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                SelectionChanged="moomin_SelectionChanged">
+
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding ID, UpdateSourceTrigger=PropertyChanged}" Header="ID" />
-                    <DataGridTextColumn Binding="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" Header="Notes" />
+                    <DataGridTextColumn Binding="{Binding ID, UpdateSourceTrigger=PropertyChanged}" Header="ID"/>
+
+                    <DataGridTextColumn Binding="{Binding Note, UpdateSourceTrigger=PropertyChanged}" Header="Notes" />
                     <DataGridTextColumn Binding="{Binding TypeFunction, UpdateSourceTrigger=PropertyChanged}" Header="Type" />
-                    <DataGridTextColumn Binding="{Binding Function, UpdateSourceTrigger=PropertyChanged}" Header="Function" />
-                    <DataGridTextColumn Binding="{Binding FunctionParams, UpdateSourceTrigger=PropertyChanged}" Header="Values" />
+                    <DataGridTextColumn Binding="{Binding Function, UpdateSourceTrigger=PropertyChanged}" Header="Function" >
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="END">
+                                        <Setter Property="Background" Value="LightSalmon"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding FunctionParams[0], UpdateSourceTrigger=PropertyChanged}" Header="Value 1 " />
+                    <DataGridTextColumn Binding="{Binding FunctionParams[1], UpdateSourceTrigger=PropertyChanged}" Header="Value 2 " />
+                    <DataGridTextColumn Binding="{Binding FunctionParams[2], UpdateSourceTrigger=PropertyChanged}" Header="Value 3 " />
+                    <DataGridTextColumn Binding="{Binding FunctionParams[3], UpdateSourceTrigger=PropertyChanged}" Header="Value 4 " />
+                    <DataGridTextColumn Binding="{Binding FunctionParams[4], UpdateSourceTrigger=PropertyChanged}" Header="Value 5 " />
+                    <DataGridTextColumn Binding="{Binding FunctionParams[5], UpdateSourceTrigger=PropertyChanged}" Header="Value 6 " />
+                    <DataGridTextColumn Binding="{Binding FunctionParams[6], UpdateSourceTrigger=PropertyChanged}" Header="Value 7 " />
+                    <DataGridTextColumn Binding="{Binding FunctionParams[7], UpdateSourceTrigger=PropertyChanged}" Header="Value 8 " />
+                    <DataGridTextColumn Binding="{Binding FunctionParams[8], UpdateSourceTrigger=PropertyChanged}" Header="Value 9 " />
+                    <DataGridTextColumn Binding="{Binding FunctionParams[9], UpdateSourceTrigger=PropertyChanged}" Header="Value 10 " />
+                    <DataGridTextColumn Binding="{Binding FunctionParams[10], UpdateSourceTrigger=PropertyChanged}" Header="Value 11 " />
+                    <DataGridTextColumn Binding="{Binding FunctionParams[11], UpdateSourceTrigger=PropertyChanged}" Header="Value 12 " />
                 </DataGrid.Columns>
 
             </DataGrid>
             <Button
-                Width="58"
-                Height="19"
+                Width="39"
+                Height="36"
                 Click="Button_Click"
-                Content="Save" />
+                Content="Save"
+                DockPanel.Dock="Right"
+                RenderTransformOrigin="0.5,0.5">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform />
+                        <SkewTransform />
+                        <RotateTransform Angle="0.947" />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
         </DockPanel>
     </Grid>
 </Window>

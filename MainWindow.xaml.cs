@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -26,8 +27,8 @@ namespace WPF_test
         public string EventNum = "";
         public Char TypeFunction = '-';
         public string Function = "";
-        public string[] FunctionParams = Array.Empty<string>();
-        public string ParamAsString;
+        public string[] FunctionParams;
+        public string ParamAsString = " ";
 
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -85,16 +86,20 @@ namespace WPF_test
                             TypeFunction = line[0];
                             Function = line.Split(' ').Skip(1).FirstOrDefault();
 
-
+                            //FunctionParams = (String[])line.Split(' ').Skip(2).DefaultIfEmpty("");
                             FunctionParams = line.Split(' ').Skip(2).ToArray();
+                            if (FunctionParams.Length <= 0 || FunctionParams is null)
+                            { FunctionParams.Append("-"); }
                         }
+
+                        //BELOW WE SETUP THE custom EVENT line ready to be added to the list 
                         if (line.StartsWith(";"))
                         {
                             LineEvent.Note = line;
                         }
                         if (TypeFunction != '-')
                         {
-                            LineEvent.ID = EventNum;
+                            //LineEvent.ID = EventNum;
                             LineEvent.TypeFunction = TypeFunction;
                             LineEvent.Function = Function;
                             LineEvent.FunctionParams = FunctionParams;
@@ -106,6 +111,8 @@ namespace WPF_test
                             LineEvent.Function = Function;
                             LineEvent.FunctionParams = FunctionParams;
                         }
+                        //End of construction ^
+
                         ListOfEvents.Add(LineEvent);
                     }
 
@@ -147,18 +154,24 @@ namespace WPF_test
                     }
                     else
                     {
-                        //if (item.Note.StartsWith(";"))
-                        //  {
-                        //writer.WriteLine(item.Note);
-                        //   }
-                        //else
-                        // {
+                        if (item.Note is not null)
+                        {
+                            if (item.Note.StartsWith(";"))
+                            {
+                                writer.WriteLine(item.Note);
+                            }
+                        }
+
+
                         ParamAsString = "";
+
                         foreach (string param in item.FunctionParams)
                         {
                             ParamAsString += param + " ";
                         }
+
                         ParamAsString.Trim();
+
                         writer.WriteLine(item.TypeFunction + " " + item.Function + " " + ParamAsString.ToString());
                     }
 
@@ -166,5 +179,18 @@ namespace WPF_test
             }
             //MessageBox.Show(ListOfEvents.);
         }
+
+
+
+        private void moomin_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
+ 
+        
+    
+
+
+

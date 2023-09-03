@@ -1,6 +1,6 @@
 ﻿Event Manager_v2
 -----
-This is the UI version of the Event Console but as a WPF project, in this, you can load Myth of Somas .evt files, edit them and save them back to Somas native format. This is designed to make it easier to manage a server as currently the tool is hand edited in notepad.
+This is the UI version of the Event Console but as a WPF project, in this, you can load Myth of Somas .evt files, edit them and save them back to Somas native format. This is designed to make it easier to manage a server as currently events are hand edited in notepad.
 
 v0.01
 -------
@@ -8,4 +8,13 @@ v0.01
 -Created datagrid and (finally) binded list to datagrid.
 -Added functionality to edit rows and save the file back (to a hard coded save file named test.evt).
 
+v0.02
+-------
+-Notes are now displayed and saved
+-Now populating parameters (named as Values) of a line after loading a file (but it is erroring on null references...)
+-Begin to implement combo selections.
 
+
+Bugs / Problems
+-------
+-If a parameter column isn't filled, it will error or simila but builds sucessful and works...
