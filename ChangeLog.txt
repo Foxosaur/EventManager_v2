@@ -12,9 +12,12 @@ v0.02
 -------
 -Notes are now displayed and saved
 -Now populating parameters (named as Values) of a line after loading a file (but it is erroring on null references...)
--Begin to implement combo selections.
+-Added a colored cell affect to event 'END' as a trial.
 
+v0.03
+-Begun to implement combo selections.
+-Removed dockpanels for now.
 
 Bugs / Problems
 -------
--If a parameter column isn't filled, it will error or simila but builds sucessful and works...
+-If a parameter column isn't filled, it will error or similar but builds sucessful and works...
