@@ -1,7 +1,9 @@
-﻿using Microsoft.Win32;
+﻿using Event_Manager_v2;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -41,7 +43,7 @@ namespace WPF_test
 
             OpenFileDialog openFileDialog = new()
             {
-                InitialDirectory = "c:\\",
+                //InitialDirectory = "c:\\",
                 Filter = "Event files (*.Evt)|*.Evt|All files (*.*)|*.*",
                 FilterIndex = 1,
                 RestoreDirectory = true
@@ -49,7 +51,7 @@ namespace WPF_test
             if (openFileDialog.ShowDialog() == true)
             {
                 //Get the path of specified file
-                filePath = openFileDialog.FileName;
+                //filePath = openFileDialog.FileName;
 
                 //Read the contents of the file into a stream
                 var fileStream = openFileDialog.OpenFile();
@@ -59,6 +61,18 @@ namespace WPF_test
                     fileContent = reader.ReadToEnd();
                 }
                 StringReader ReaderOfEventNotes = new(fileContent);
+
+                if(ListOfEvents.Count > 0)
+                {
+                    //If we've already loaded a evt file in this session, lets clear the list and refresh the datagrid
+
+                    moomin.SelectedIndex = 0;
+                    moomin.ItemsSource = null;
+                    
+                    ListOfEvents.Clear();
+                    
+                    
+                }
                 while ((line = ReaderOfEventNotes.ReadLine()) != null)
                 {
                     /*if (line.StartsWith(";"))
@@ -97,7 +111,7 @@ namespace WPF_test
                         {
                             LineEvent.Note = line;
                         }
-                        if (TypeFunction != '-')
+                        if (TypeFunction != '-') // '-' is a holding char as it can't be null....so if it's '-' it's going to be a EVENT XXX or END line
                         {
                             //LineEvent.ID = EventNum;
                             LineEvent.TypeFunction = TypeFunction;
@@ -180,7 +194,22 @@ namespace WPF_test
             //MessageBox.Show(ListOfEvents.);
         }
 
+        private void LoadGlossaryHelpFile_Click(object sender, RoutedEventArgs e)
+        {
+            string GlossaryPath = "eventglossary.txt";
 
+            //Read the contents of the file into a stream
+            var fileStream = GlossaryPath;
+
+            using (StreamReader reader = new StreamReader(fileStream))
+            {
+                fileContent = reader.ReadToEnd();
+            }
+            StringReader ReaderOfGlossary = new(fileContent);
+            var glossaryWindow= new GlossaryWindow { Owner = this };
+            glossaryWindow.Show();
+            glossaryWindow.GlossaryTextXox.Text = ReaderOfGlossary.ReadToEnd();
+        }
 
         private void moomin_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

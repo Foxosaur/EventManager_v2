@@ -15,9 +15,28 @@ v0.02
 -Added a colored cell affect to event 'END' as a trial.
 
 v0.03
+-------
 -Begun to implement combo selections.
 -Removed dockpanels for now.
 
+v0.04
+-------
+-Loading multiple EVTs in a session will empty the source list and refresh the datagrid.
+-Added over half of the event functions (though not implemented)
+-Event file loading will now remember the folder your using
+-Added Help menu and a open glossary option - which reads an inbuilt text file of event help information. This opens in a new window
+
+
 Bugs / Problems
 -------
--If a parameter column isn't filled, it will error or similar but builds sucessful and works...
+-If a parameter column isn't filled, it will error or similar but builds sucessful and works... needs to be dealt with later.
+-Loading multiple evt files without closing and reopening causes a crash. (Fixed v0.04)
+-Need to add remaining event functions (E done but A/O barely started).
+-Need to re-size and ideally dock the new glossary window.
+
+
+Outstanding features
+-------
+
+-Implement tool tips / help window.
+-Implement load of NPC chat messages and ids from db.

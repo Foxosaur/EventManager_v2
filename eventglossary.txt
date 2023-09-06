@@ -1,0 +1,208 @@
+Event Glossary
+
+(Credits to Ramy and anyone else that originally contributed )
+
+E Commands
+
+LINK [X] [Y] [Z]
+SAY [npcchatid]
+STORE_OPEN [shopid] [sellrate] [buyrate] [townnum]
+GIVE_ITEM [itemnum] [ammount]
+ROB_ITEM [itemnum] [ammount]
+GIVE_MAGIC [magicid]
+ROB_MAGIC [magicid]
+BBS_OPEN [bbsid] [mode?]   
+		  mode 1 and less or 4 and above = standard
+		  mode 2,3 = unknown
+		  mode 4 = gm only?
+DISAPPEAR - NOT IMPLEMENTED
+RUN_MAGIC - NOT IMPLEMENTED
+DEAD  - NOT IMPLEMENTED
+CHANGE_LEVEL  - NOT IMPLEMENTED
+CHANGE_GENDER   - NOT IMPLEMENTED
+CHANGE_HP [type] [amount]  
+          type > 0 adds hp to full IF the amount + currenthp = maxhp
+          type < 1 kills player if ammount > currenthp
+CHANGE_MP [type] [amount]  same as hp ^ but sets mp to 0 instead of death
+CHANGE_STR [type] [amount]   
+            type 1 adds ammount
+            type not 1 removes ammount if ammount <= current value else sets it to 0
+CHANGE_DEX [type] [amount]  
+CHANGE_INT [type] [amount]  
+CHANGE_WIS [type] [amount]  
+CHANGE_CHA [type] [amount]  
+CHANGE_CON [type] [amount]
+                             ^ all same as str
+CHANGE_DMAGIC - NOT IMPLEMENTED
+CHANGE_WMAGIC - NOT IMPLEMENTED
+CHANGE_BMAGIC - NOT IMPLEMENTED
+CHANGE_SWORD  - NOT IMPLEMENTED
+CHANGE_SPEAR  - NOT IMPLEMENTED
+CHANGE_AXE   - NOT IMPLEMENTED
+CHANGE_BOW   - NOT IMPLEMENTED
+CHANGE_KNUCKLE  - NOT IMPLEMENTED
+CHANGE_WEAPONMAKE - NOT IMPLEMENTED
+CHANGE_ARMORMAKE   - NOT IMPLEMENTED
+CHANGE_ACCMAKE   - NOT IMPLEMENTED
+CHANGE_POTIONMAKE   - NOT IMPLEMENTED
+CHANGE_COOKING  - NOT IMPLEMENTED
+
+SHOW_MAGIC [magicid] [unkown]
+MAKER_OPEN [id1] [id2] [id3] [id4] [id5] [id6]
+STORAGE_OPEN [unused?]
+AUCTION_SELL_OPEN [id?]
+AUCTION_BUY_OPEN  [id?]
+SELECT_MSG [INTROmsgid] [opt1msgid] [opt1evtid] [opt2msgid] [opt2evtid] [opt3msgid] [opt3evtid] [opt4msgid] [opt4evtid] 
+MESSAGE_OK [npchatid]
+MESSAGE_NONE [npchatid]
+GIVE_GOLD [ammount]
+ROB_GOLD [ammount]
+RUN_EVENT [eventid]
+ADD_EVENT [usereventid]
+DEL_EVENT [usereventid]
+RAND_SAY [npchatid] [npchatid] [npchatid] [npchatid] [npchatid] ... (unlimited on ext maybe 5 on legacy?)
+RETURN
+CHANGE_MAGETYPE [type?]
+GUILD_OPEN
+REPAIR_ITEM_OPEN
+GIVE_SPECIAL_ATTACK [specialid]
+KILL_NPC
+PLUS_MORAL [ammount] [min/max?]
+OPEN_CONTRIBUTION [unkown]
+CHANGE_STORAGE_TYPE [type]
+WARP_GATE [z] [x] [y]
+AUCTION_DRAW_NOBID [id?]
+AUCTION_DRAW_NOBUY [id?]
+AUCTION_BUY_ITEM [auctionid]
+AUCTION_GET_MONEY [auctionid?]
+AUCTION_DELETE_BADLIST 
+CHANGE_MAX_HP [type] [ammount]
+                ^ anything other than type 1 does nothing
+CHANGE_MAX_MP [type] [ammount]
+CHANGE_MAX_STM [type] [ammount]
+CHANGE_MAX_WGT [type] [ammount]
+                ^ all same as max hp
+OPEN_HAIRSHOP [unknown] [unknown] [unknown] [unknown]                
+LIVE_NPC [sSid] [amount] [x] [y]
+ADD_SERVER_EVENT [serverevent?]
+DEL_SERVER_EVENT [serverevent?]
+GIVE_MAKE_SKILL [id]
+OPEN_SPECIAL_MAKESKILL [id]
+OPEN_GUILDTOWN_STONE [guildtownid]
+GUILDTOWN_TAXRATE [guildtownid]
+OPEN_GUILDTOWN_STORE_REG [guildtownid]
+OPEN_GUILDTOWN_STORE [guildtownid]
+MAGIC [magicid]
+SPECIAL_ATTACK [specialid]
+OPEN_TRADER [number] [number] [number] [number] [number] [number]
+OPEN_CHANGE_ITEM
+COUNTER_START [monid1] [monid2] [monid3]
+COUNTER_INIT
+OPEN_MONSTER_SELECT
+TIMER_START
+TIMER_INIT
+SET_EVENTCOUNT [number]
+RESET_EVENTCOUNT
+CLASSPOINT_STORE_OPEN [id]
+OPEN_MONSTER_ZONE
+XMASPOINT_USER
+XMASPOINT_GUILD
+
+xmas gem is sSpecial 67 , and its value is in sSpOpt1
+there are two ways to submit these xmas gems to npcs
+E XMASPOINT_USER     calls proc_XMasPointUser with points , username    (all gems are removed and tallied in to this call)
+E XMASPOINT_GUILD   calls proc_XMasPointGuild with points,guildname (all gems are removed and tallied in to this call)
+there's also a getxmaspoint proc called via /xmaspoint
+
+CHANGE_PKMODE [mode]
+GET_POSITEM
+
+~~~~~~~~~~~~~~~~~~~
+~ NEW
+~~~~~~
+~RAIN [mode]  1 = on 0 = off
+~SHOW_DIR [x1] [y1] [x2] [y2] show yellow arrow waypoint to closest coord out of the two
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+A/O Commands
+
+LEVEL [min] [max] -1 implies unbound
+GENDER [type] 
+AGE  [min] [max] 
+HP  [min] [max] 
+MP  [min] [max] 
+STR  [min] [max] 
+DEX  [min] [max] 
+INT  [min] [max] 
+WIS  [min] [max] 
+CHA [min] [max]  // broken on legacy multiply min and max by 10 mil to work properly
+CON [min] [max] 
+DMAGIC [min] [max]
+WMAGIC  [min] [max]
+BMAGIC   [min] [max]
+SWORD  [min] [max]
+SPEAR [min] [max]
+AXE [min] [max]
+BOW [min] [max]
+KNUCKLE  [min] [max]
+STAFF [min] [max]
+WEAPONMAKE [min] [max]
+ARMORMAKE [min] [max]
+ACCMAKE [min] [max]
+POTIONMAKE [min] [max]
+COOKING [min] [max]
+EXIST_ITEM [itemid] [amount]
+ABSENT_ITEM [itemid]
+EXIST_ITEM_TYPE [type] [amount]
+ABSENT_ITEM_TYPE [type]
+EXIST_MAGIC [magicid]
+ABSENT_MAGIC [magicid]
+EXIST_EVENT [eventid]
+ABSENT_EVENT [eventid]
+TIME [min] [max]
+RAND [num]
+GOLD [min] [max]
+GAME_TIME [month] [day] [minhour] [maxhour]
+GAME_DAY [month] [minday] [maxday]
+GAME_MONTH [min] [max]
+HOWMUCH_ITEM [itemid] [min] [max]
+MORAL [min] [max]
+MAGETYPE [unknown] [unused?]
+WEIGHT [npcchatid][item 1] [amount] [item 2] [amount] [item 3] [amount] [item 4] [amount] [item 5] [amount]
+RANK [type]
+CHECK_ITEMSLOT [npcchatid][item 1] [amount] [item 2] [amount] [item 3] [amount] [item 4] [amount] [item 5] [amount]
+CHECK_POSITION [zone] [x1] [y1] [x2] [y2]
+CHECK_FIRST_CLICK
+STORAGE_TYPE [type]
+CHECK_AUCTION_BADLIST
+CHECK_AUCTION_STATE [state]
+EXIST_SPECIAL_ATTACK [id]
+ABSENT_SPECIAL_ATTACK [id]
+EXIST_MAGETYPE [type]
+ABSENT_MAGETYPE [type]
+CHECK_ALIVE_NPC [monstersetid] [amount]
+EXIST_MAKE_SKILL [id]
+ABSENT_MAKE_SKILL [id]
+CHECK_GUILD_TOWN [id]
+CHECK_GUILD_RANK [rank]
+COMPARE_BASIC_VALUE [unused] [unknown1] [unknown2] [unknown3] [unknown4] [unknown5] [unknown6]
+ ^ this does not seem to do a damn thing other than waste computation cycles
+CHECK_JOB [id]
+CHECK_GUILD_TOWN_ALLY [townid]
+CHECK_GUILD_TOWN_WAR [townid]
+CHECK_GUILD_TOWN_LEVEL [townid] [level]
+CHECK_HUMAN
+CHECK_DEMON
+CHECK_MONSTER
+CHECK_COUNTER  [min] [max]
+CHECK_TIMER [min] [max]
+CHECK_EVENTCOUNT  [min] [max]
+CHECK_PAYTYPE [type]
+CHECK_CLASS_TOWN  
+CHECK_CLASS_TOWN_WAR 
+CHECK_HAVE_EVENTBOOK 
+CHECK_EVENTBOOK 
+CHECK_PKMODE  [mode]
+CHECK_PAYACCOUNT 
+PAYACCOUNT 

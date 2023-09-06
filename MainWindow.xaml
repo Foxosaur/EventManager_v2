@@ -18,7 +18,7 @@
 
         <Menu>
             <MenuItem
-                Width="999"
+                Width="90"
                 Height="37"
                 Header="_File">
                 <MenuItem Header="_New" />
@@ -26,6 +26,12 @@
                 <MenuItem Header="_Save" />
                 <Separator />
                 <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem
+                Width="90"
+                Height="37"
+                Header="_Help">
+                <MenuItem Click="LoadGlossaryHelpFile_Click" Header="_with Function Glossary" />
             </MenuItem>
         </Menu>
 
