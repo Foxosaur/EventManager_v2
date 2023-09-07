@@ -23,15 +23,22 @@ v0.04
 -------
 -Loading multiple EVTs in a session will empty the source list and refresh the datagrid.
 -Added over half of the event functions (though not implemented)
--Event file loading will now remember the folder your using
+-Event file loading will now remember the folder you've used
 -Added Help menu and a open glossary option - which reads an inbuilt text file of event help information. This opens in a new window
+
+v0.05
+-------
+-Spelling and added more feature requirements
+-Added a DB Configure window, text boxes and labels, begun configuring the feature and adding to it
+-Added Microsoft.Data.SqlClient package, successfully connected using a connection string.
+-Tested a new loading of the NPC Chat display within the DB Test window.
 
 
 Bugs / Problems
 -------
 -If a parameter column isn't filled, it will error or similar but builds sucessful and works... needs to be dealt with later.
 -Loading multiple evt files without closing and reopening causes a crash. (Fixed v0.04)
--Need to add remaining event functions (E done but A/O barely started).
+-Need to add remaining event functions for combobox use (E done but A/O barely started).
 -Need to re-size and ideally dock the new glossary window.
 
 
@@ -39,4 +46,6 @@ Outstanding features
 -------
 
 -Implement tool tips / help window.
--Implement load of NPC chat messages and ids from db.
+-Implement load of NPC chat messages and ids from db for easier referencing.
+-Need Save-to dialog - atm just saves to test.evt
+-Need to add checkboxes to both "Trusted Connection" and "Encrypted" for configuring the conection.

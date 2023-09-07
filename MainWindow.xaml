@@ -30,6 +30,13 @@
             <MenuItem
                 Width="90"
                 Height="37"
+                Header="_Database">
+                <MenuItem Click="Config_DB_Click" Header="_Configure SQL Connection" />
+                <MenuItem Click="LoadDB_NPC_Click" Header="_Load NPC Chat and IDs" />
+            </MenuItem>
+            <MenuItem
+                Width="90"
+                Height="37"
                 Header="_Help">
                 <MenuItem Click="LoadGlossaryHelpFile_Click" Header="_with Function Glossary" />
             </MenuItem>

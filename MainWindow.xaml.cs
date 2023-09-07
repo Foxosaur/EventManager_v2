@@ -215,6 +215,16 @@ namespace WPF_test
         {
 
         }
+        private void LoadDB_NPC_Click(object sender, RoutedEventArgs e) 
+        {
+
+        }
+        private void Config_DB_Click(object sender, RoutedEventArgs e) 
+        {
+            var dBConfigureWindow = new DBConfigureWindow { Owner = this };
+            dBConfigureWindow.Show();
+            //glossaryWindow.GlossaryTextXox.Text = ReaderOfGlossary.ReadToEnd();
+        }
     }
 }
  
