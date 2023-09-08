@@ -12,13 +12,14 @@
     mc:Ignorable="d">
     <Window.Resources>
         <staticData:TypeFunctionList x:Key="TypeFunctionList" />
+        <staticData:FunctionList x:Key="FunctionList" />
     </Window.Resources>
     <Grid>
         <TextBox AcceptsReturn="True" />
 
         <Menu>
             <MenuItem
-                Width="90"
+                Width="Auto"
                 Height="37"
                 Header="_File">
                 <MenuItem Header="_New" />
@@ -28,23 +29,28 @@
                 <MenuItem Header="_Exit" />
             </MenuItem>
             <MenuItem
-                Width="90"
+                Width="Auto"
                 Height="37"
                 Header="_Database">
                 <MenuItem Click="Config_DB_Click" Header="_Configure SQL Connection" />
-                <MenuItem Click="LoadDB_NPC_Click" Header="_Load NPC Chat and IDs" />
             </MenuItem>
             <MenuItem
-                Width="90"
+                Width="Auto"
                 Height="37"
                 Header="_Help">
                 <MenuItem Click="LoadGlossaryHelpFile_Click" Header="_with Function Glossary" />
             </MenuItem>
-        </Menu>
 
+        </Menu>
+        <Button
+            Margin="920,516,10,10"
+            Click="SavetoFile_Click"
+            Content="Save"
+            RenderTransformOrigin="0.5,0.5" />
         <DataGrid
             x:Name="moomin"
             Margin="10,47,45,153"
+            AllowDrop="True"
             AlternatingRowBackground="#FFF7F1F1"
             AutoGenerateColumns="False"
             RenderTransformOrigin="0.5,0.5"
@@ -53,17 +59,40 @@
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             SelectionChanged="moomin_SelectionChanged">
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding ID, UpdateSourceTrigger=PropertyChanged}" Header="ID" />
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick" />
+                </Style>
+            </DataGrid.Resources>
 
-                <DataGridTextColumn Binding="{Binding Note, UpdateSourceTrigger=PropertyChanged}" Header="Your notes" />
-                <!-- "<DataGridTextColumn Binding="{Binding TypeFunction, UpdateSourceTrigger=PropertyChanged}" Header="Type" /> -->
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    x:Name="dataGridTextColumn"
+                    Binding="{Binding ID, UpdateSourceTrigger=PropertyChanged}"
+                    Header="ID" />
+
+                <DataGridTextColumn Binding="{Binding Note, UpdateSourceTrigger=PropertyChanged}" Header="Your notes">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="ToolTip" Value="General rule: - Whenever you add a note ensure it has a ; at the start/ &#xA;&#xA;If you dont, the file may appear to save fine but loading it into your Soma server will cause an error." />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
                 <DataGridComboBoxColumn
                     Header="Type"
                     ItemsSource="{StaticResource TypeFunctionList}"
-                    SelectedItemBinding="{Binding TypeFunction}" />
+                    SelectedItemBinding="{Binding TypeFunction}">
+                    <DataGridComboBoxColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="ToolTip" Value="General rule: -&#xA;A - Check or Requirement&#xA;E - DO Something like run an event&#xA;O - Make a change like players max HP&#xA;&#xA; And remember A lines mostly comes before E events and O probably last. &#xA;&#xA;Why? Because you usually want 'requirements (A) before doing anything like a level requirement or a item requirement or having a certain quest." />
+                        </Style>
+                    </DataGridComboBoxColumn.HeaderStyle>
+                </DataGridComboBoxColumn>
+                <DataGridTextColumn
+                    x:Name="dataGridComboBoxColumn"
+                    Header="Function"
+                    Binding="{Binding Function}">
 
-                <DataGridTextColumn Binding="{Binding Function, UpdateSourceTrigger=PropertyChanged}" Header="Function">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Style.Triggers>
@@ -73,8 +102,8 @@
                             </Style.Triggers>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
-
                 </DataGridTextColumn>
+
                 <DataGridTextColumn Binding="{Binding FunctionParams[0], UpdateSourceTrigger=PropertyChanged}" Header="Value 1 " />
                 <DataGridTextColumn Binding="{Binding FunctionParams[1], UpdateSourceTrigger=PropertyChanged}" Header="Value 2 " />
                 <DataGridTextColumn Binding="{Binding FunctionParams[2], UpdateSourceTrigger=PropertyChanged}" Header="Value 3 " />
@@ -87,13 +116,10 @@
                 <DataGridTextColumn Binding="{Binding FunctionParams[9], UpdateSourceTrigger=PropertyChanged}" Header="Value 10 " />
                 <DataGridTextColumn Binding="{Binding FunctionParams[10], UpdateSourceTrigger=PropertyChanged}" Header="Value 11 " />
                 <DataGridTextColumn Binding="{Binding FunctionParams[11], UpdateSourceTrigger=PropertyChanged}" Header="Value 12 " />
+
             </DataGrid.Columns>
 
         </DataGrid>
-        <Button
-            Margin="920,516,10,10"
-            Click="Button_Click"
-            Content="Save"
-            RenderTransformOrigin="0.5,0.5" />
     </Grid>
+
 </Window>

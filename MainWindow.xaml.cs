@@ -2,12 +2,13 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace WPF_test
 {
@@ -19,6 +20,8 @@ namespace WPF_test
         public MainWindow()
         {
             InitializeComponent();
+            moomin.PreviewMouseLeftButtonDown += new MouseButtonEventHandler(moominDataGrid_PreviewMouseLeftButtonDown);
+            moomin.Drop += new DragEventHandler(moominDataGrid_Drop);
         }
         public List<EventLines> ListOfEvents = new();
 
@@ -43,15 +46,13 @@ namespace WPF_test
 
             OpenFileDialog openFileDialog = new()
             {
-                //InitialDirectory = "c:\\",
                 Filter = "Event files (*.Evt)|*.Evt|All files (*.*)|*.*",
                 FilterIndex = 1,
                 RestoreDirectory = true
             };
             if (openFileDialog.ShowDialog() == true)
             {
-                //Get the path of specified file
-                //filePath = openFileDialog.FileName;
+
 
                 //Read the contents of the file into a stream
                 var fileStream = openFileDialog.OpenFile();
@@ -62,16 +63,16 @@ namespace WPF_test
                 }
                 StringReader ReaderOfEventNotes = new(fileContent);
 
-                if(ListOfEvents.Count > 0)
+                if (ListOfEvents.Count > 0)
                 {
                     //If we've already loaded a evt file in this session, lets clear the list and refresh the datagrid
 
                     moomin.SelectedIndex = 0;
                     moomin.ItemsSource = null;
-                    
+
                     ListOfEvents.Clear();
-                    
-                    
+
+
                 }
                 while ((line = ReaderOfEventNotes.ReadLine()) != null)
                 {
@@ -144,54 +145,68 @@ namespace WPF_test
                 ReaderOfEventNotes.Dispose();
                 moomin.ItemsSource = ListOfEvents;
             }
-
+            //loading done
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SavetoFile_Click(object sender, RoutedEventArgs e)
         {
-            using (StreamWriter writer = new StreamWriter("test.evt"))
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Event files (*.Evt)|*.Evt|All files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 1;
+            saveFileDialog1.RestoreDirectory = true;
+            saveFileDialog1.Title = "Save an Myth of Soma event file";
+            saveFileDialog1.OverwritePrompt = true;
+            if (saveFileDialog1.ShowDialog() == true) ;
             {
-                foreach (EventLines item in ListOfEvents)
+
+                // If the file name is not an empty string open it for saving.
+                if (saveFileDialog1.FileName != "")
                 {
+                    using (StreamWriter writer = new StreamWriter(saveFileDialog1.FileName))
+                    {
+                        foreach (EventLines item in ListOfEvents)
+                        {
 
-                    if (item.Function.StartsWith("EVENT ") || item.Function.StartsWith("END"))
-                    {
-                        writer.WriteLine(item.Function);
-                        if (item.Function.StartsWith("EVENT "))
-                        {
-                            //  writer.WriteLine(item.Note + "\r\n");
-                        }
-                        if (item.Function.StartsWith("END"))
-                        {
-                            writer.WriteLine("\r\n");
-                        }
-                    }
-                    else
-                    {
-                        if (item.Note is not null)
-                        {
-                            if (item.Note.StartsWith(";"))
+                            if (item.Function.StartsWith("EVENT ") || item.Function.StartsWith("END"))
                             {
-                                writer.WriteLine(item.Note);
+                                writer.WriteLine(item.Function);
+                                if (item.Function.StartsWith("EVENT "))
+                                {
+                                    //  writer.WriteLine(item.Note + "\r\n");
+                                }
+                                if (item.Function.StartsWith("END"))
+                                {
+                                    writer.WriteLine("\r\n");
+                                }
                             }
+                            else
+                            {
+                                if (item.Note is not null)
+                                {
+                                    if (item.Note.StartsWith(";"))
+                                    {
+                                        writer.WriteLine(item.Note);
+                                    }
+                                }
+
+
+                                ParamAsString = "";
+
+                                foreach (string param in item.FunctionParams)
+                                {
+                                    ParamAsString += param + " ";
+                                }
+
+                                ParamAsString.Trim();
+
+                                writer.WriteLine(item.TypeFunction + " " + item.Function + " " + ParamAsString.ToString());
+                            }
+
                         }
-
-
-                        ParamAsString = "";
-
-                        foreach (string param in item.FunctionParams)
-                        {
-                            ParamAsString += param + " ";
-                        }
-
-                        ParamAsString.Trim();
-
-                        writer.WriteLine(item.TypeFunction + " " + item.Function + " " + ParamAsString.ToString());
                     }
-
                 }
+                //MessageBox.Show(ListOfEvents.);
             }
-            //MessageBox.Show(ListOfEvents.);
         }
 
         private void LoadGlossaryHelpFile_Click(object sender, RoutedEventArgs e)
@@ -206,7 +221,7 @@ namespace WPF_test
                 fileContent = reader.ReadToEnd();
             }
             StringReader ReaderOfGlossary = new(fileContent);
-            var glossaryWindow= new GlossaryWindow { Owner = this };
+            var glossaryWindow = new GlossaryWindow { Owner = this };
             glossaryWindow.Show();
             glossaryWindow.GlossaryTextXox.Text = ReaderOfGlossary.ReadToEnd();
         }
@@ -215,21 +230,129 @@ namespace WPF_test
         {
 
         }
-        private void LoadDB_NPC_Click(object sender, RoutedEventArgs e) 
+        private void LoadDB_NPC_Click(object sender, RoutedEventArgs e)
         {
 
         }
-        private void Config_DB_Click(object sender, RoutedEventArgs e) 
+        private void Config_DB_Click(object sender, RoutedEventArgs e)
         {
             var dBConfigureWindow = new DBConfigureWindow { Owner = this };
             dBConfigureWindow.Show();
             //glossaryWindow.GlossaryTextXox.Text = ReaderOfGlossary.ReadToEnd();
         }
+
+        private void ListView_SelectionChanged()
+        {
+
+        }
+
+        /*  private void AddRow_Click(object sender, RoutedEventArgs e)
+          {
+
+              if (ListOfEvents is not null)
+              {
+                  moomin.SelectedIndex = 0;
+                  moomin.ItemsSource = null;
+
+                  //ListOfEvents.Clear();
+                  EventLines AddingRow = new EventLines();
+                  AddingRow.Note = "; This is your new event line";
+                  ListOfEvents.Add(AddingRow);
+
+                  moomin.ItemsSource = ListOfEvents;
+
+              }
+          }*/
+        public delegate Point GetPosition(IInputElement element);
+        int rowIndex = -1;
+
+
+        void moominDataGrid_Drop(object sender, DragEventArgs e)
+        {
+            if (ListOfEvents is not null)
+            {
+                if (rowIndex < 0)
+                    return;
+                int index = this.GetCurrentRowIndex(e.GetPosition);
+                if (index < 0)
+                    return;
+                if (index == rowIndex)
+                    return;
+                if (index == moomin.Items.Count - 1)
+                {
+                    MessageBox.Show("This row-index cannot be drop");
+                    return;
+                }
+                EventLines changedProduct = ListOfEvents[rowIndex];
+                ListOfEvents.RemoveAt(rowIndex);
+                ListOfEvents.Insert(index, changedProduct);
+                moomin.ItemsSource = null;
+                moomin.ItemsSource = ListOfEvents;
+            }
+        }
+
+        void moominDataGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            rowIndex = GetCurrentRowIndex(e.GetPosition);
+            if (rowIndex < 0)
+                return;
+            moomin.SelectedIndex = rowIndex;
+            EventLines selectedeventline = (EventLines)moomin.Items[rowIndex];
+            if (selectedeventline == null)
+                return;
+            DragDropEffects dragdropeffects = DragDropEffects.Move;
+            if (DragDrop.DoDragDrop(moomin, selectedeventline, dragdropeffects)
+                                != DragDropEffects.None)
+            {
+                moomin.SelectedItem = selectedeventline;
+            }
+        }
+
+        private bool GetMouseTargetRow(Visual theTarget, GetPosition position)
+        {
+            Rect rect = VisualTreeHelper.GetDescendantBounds(theTarget);
+            Point point = position((IInputElement)theTarget);
+            return rect.Contains(point);
+        }
+
+        private DataGridRow GetRowItem(int index)
+        {
+            if (moomin.ItemContainerGenerator.Status
+                    != GeneratorStatus.ContainersGenerated)
+                return null;
+            return moomin.ItemContainerGenerator.ContainerFromIndex(index)
+                                                            as DataGridRow;
+        }
+
+        private int GetCurrentRowIndex(GetPosition pos)
+        {
+            int curIndex = -1;
+            for (int i = 0; i < moomin.Items.Count; i++)
+            {
+                DataGridRow itm = GetRowItem(i);
+                if (GetMouseTargetRow(itm, pos))
+                {
+                    curIndex = i;
+                    break;
+                }
+            }
+            return curIndex;
+        }
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow row = sender as DataGridRow;
+            int rowindex = row.GetIndex();
+            moomin.ItemsSource = null;
+            EventLines newitem = new EventLines();
+            newitem.Note = ";Your new row - delete this text";
+            ListOfEvents.Insert(rowindex + 1, newitem);
+            moomin.ItemsSource = ListOfEvents;
+        }
     }
 }
- 
-        
-    
+
+
+
 
 
 

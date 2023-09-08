@@ -33,19 +33,29 @@ v0.05
 -Added Microsoft.Data.SqlClient package, successfully connected using a connection string.
 -Tested a new loading of the NPC Chat display within the DB Test window.
 
+v0.06
+-------
+-Finished adding list of functions to the functions list, modified existing textblock for this column to be a combobox to use this list.
+-Enabled a tooltip for the FunctionType column header.
+-Added tooltip to Your Notes field
+-Implemented drag and dropping of rows
+-Implemented adding new rows by double clicking.
+-Regressed function list of being a drop down. Caused other UI problems.
+-Save button now gives dialog to save to.
 
 Bugs / Problems
 -------
 -If a parameter column isn't filled, it will error or similar but builds sucessful and works... needs to be dealt with later.
 -Loading multiple evt files without closing and reopening causes a crash. (Fixed v0.04)
--Need to add remaining event functions for combobox use (E done but A/O barely started).
+-Need to add remaining event functions for combobox use (E done but A/O barely started). (FIxed v0.06)
 -Need to re-size and ideally dock the new glossary window.
 
 
 Outstanding features
 -------
 
--Implement tool tips / help window.
--Implement load of NPC chat messages and ids from db for easier referencing.
+-Implement tool tips (Added v0.04~Currently)
+-Implement help/glossary (Begun adding v0.04 ish)
+-Implement load of NPC chat messages and ids from db for easier referencing. (Added v0.05)
 -Need Save-to dialog - atm just saves to test.evt
 -Need to add checkboxes to both "Trusted Connection" and "Encrypted" for configuring the conection.
