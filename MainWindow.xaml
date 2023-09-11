@@ -8,19 +8,19 @@
     xmlns:staticData="clr-namespace:WPF_test"
     Title="Event Manager v2"
     Width="1000"
-    Height="600"
+    Height="603"
     mc:Ignorable="d">
     <Window.Resources>
         <staticData:TypeFunctionList x:Key="TypeFunctionList" />
         <staticData:FunctionList x:Key="FunctionList" />
     </Window.Resources>
-    <Grid>
-        <TextBox AcceptsReturn="True" />
+    <Grid Margin="0,0,10,21">
+        <TextBox Margin="0,0,0,127" AcceptsReturn="True" />
 
-        <Menu>
+        <Menu Margin="0,0,10,518">
             <MenuItem
                 Width="Auto"
-                Height="37"
+                Height="40"
                 Header="_File">
                 <MenuItem Header="_New" />
                 <MenuItem Click="LoadEVTFile_Click" Header="_Open" />
@@ -30,26 +30,24 @@
             </MenuItem>
             <MenuItem
                 Width="Auto"
-                Height="37"
+                Height="40"
                 Header="_Database">
                 <MenuItem Click="Config_DB_Click" Header="_Configure SQL Connection" />
             </MenuItem>
             <MenuItem
                 Width="Auto"
-                Height="37"
+                Height="40"
                 Header="_Help">
                 <MenuItem Click="LoadGlossaryHelpFile_Click" Header="_with Function Glossary" />
             </MenuItem>
 
+
+
         </Menu>
-        <Button
-            Margin="920,516,10,10"
-            Click="SavetoFile_Click"
-            Content="Save"
-            RenderTransformOrigin="0.5,0.5" />
+
         <DataGrid
             x:Name="moomin"
-            Margin="10,47,45,153"
+            Margin="10,71,46,155"
             AllowDrop="True"
             AlternatingRowBackground="#FFF7F1F1"
             AutoGenerateColumns="False"
@@ -60,9 +58,15 @@
             SelectionChanged="moomin_SelectionChanged">
 
             <DataGrid.Resources>
-                <Style TargetType="DataGridRow">
+                <Style TargetType="DataGridCell">
                     <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick" />
+                    <Style.Triggers>
+                        <Trigger Property="DataGridCell.IsSelected" Value="True">
+                            <Setter Property="Background" Value="LightGreen" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
+
             </DataGrid.Resources>
 
             <DataGrid.Columns>
@@ -90,13 +94,16 @@
                 </DataGridComboBoxColumn>
                 <DataGridTextColumn
                     x:Name="dataGridComboBoxColumn"
-                    Header="Function"
-                    Binding="{Binding Function}">
+                    Binding="{Binding Function}"
+                    Header="Function">
 
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Style.Triggers>
                                 <Trigger Property="Text" Value="END">
+                                    <Setter Property="Background" Value="LightSalmon" />
+                                </Trigger>
+                                <Trigger Property="Text" Value="EVENT ">
                                     <Setter Property="Background" Value="LightSalmon" />
                                 </Trigger>
                             </Style.Triggers>
@@ -120,6 +127,40 @@
             </DataGrid.Columns>
 
         </DataGrid>
+        <Grid Margin="10,439,0,0">
+            <Button
+                Margin="880,33,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="SavetoFile_Click"
+                Content="Save to Evt File" />
+            <Button
+                Margin="10,10,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="AddRow_Btn"
+                Content="Add Row" />
+            <Button
+                Margin="4,44,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="DeleteRow_Btn"
+                Content="Delete Row" />
+            <TextBox
+                Name="SearchField"
+                Width="120"
+                Margin="354,47,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Text=""
+                TextWrapping="Wrap" />
+            <Button
+                Margin="490,46,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="SearchEvent_Btn"
+                Content="Find Event" />
+        </Grid>
     </Grid>
 
 </Window>

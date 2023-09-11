@@ -43,6 +43,16 @@ v0.06
 -Regressed function list of being a drop down. Caused other UI problems.
 -Save button now gives dialog to save to.
 
+v0.07
+-------
+
+-Added working delete and add row buttons. The double click function remains.
+-Cleaned up the background UI a little.
+-Added search box and button
+-Set highlighted row color to make it more obvious when searching for your event.
+-Found row will now scroll it into view.
+
+
 Bugs / Problems
 -------
 -If a parameter column isn't filled, it will error or similar but builds sucessful and works... needs to be dealt with later.
@@ -57,5 +67,6 @@ Outstanding features
 -Implement tool tips (Added v0.04~Currently)
 -Implement help/glossary (Begun adding v0.04 ish)
 -Implement load of NPC chat messages and ids from db for easier referencing. (Added v0.05)
--Need Save-to dialog - atm just saves to test.evt
+-Need Save-to dialog - atm just saves to test.evt (Added in v0.06)
 -Need to add checkboxes to both "Trusted Connection" and "Encrypted" for configuring the conection.
+-Add ability to delete a row. (Added v0.07)

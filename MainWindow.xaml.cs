@@ -348,6 +348,63 @@ namespace WPF_test
             ListOfEvents.Insert(rowindex + 1, newitem);
             moomin.ItemsSource = ListOfEvents;
         }
+        private void AddRow_Btn(object sender, EventArgs e)
+        {
+            if (moomin.SelectedIndex > 0)
+            {
+                //DataGridRow row = new();
+                int rowindex = moomin.SelectedIndex;
+                moomin.ItemsSource = null;
+                EventLines newitem = new EventLines();
+                newitem.Note = ";Your new row - delete this text";
+                ListOfEvents.Insert(rowindex + 1, newitem);
+                moomin.ItemsSource = ListOfEvents;
+                //Grid.RowDefinitions.Add(new RowDefinition());
+            }
+            else
+            {
+                //moomin.SelectedIndex = 0;
+                MessageBox.Show("Please select a row first to add new line below");
+            }
+        }
+        private void DeleteRow_Btn(object sender, EventArgs e)
+        {
+            if (moomin.SelectedIndex > 0)
+            {
+                //DataGridRow row = new();
+                int rowindex = moomin.SelectedIndex;
+                moomin.ItemsSource = null;
+                //EventLines newitem = new EventLines();
+                // newitem.Note = ";Your new row - delete this text";
+                ListOfEvents.RemoveAt(rowindex);
+                moomin.ItemsSource = ListOfEvents;
+                //Grid.RowDefinitions.Add(new RowDefinition());
+            }
+            else
+            {
+                //moomin.SelectedIndex = 0;
+                MessageBox.Show("Please select a row first to delete");
+            }
+        }
+
+        private void SearchEvent_Btn(object sender, EventArgs e)
+        {
+            
+            if (SearchField.Text != "")
+            {
+                string enumber = SearchField.Text; //String to handle the double digit events that use a leading 0
+                int rowindex = ListOfEvents.IndexOf(ListOfEvents.Find(item => item.Function.StartsWith("EVENT " + enumber)));
+                moomin.SelectedIndex = rowindex;
+                moomin.ScrollIntoView(moomin.SelectedItem);
+                enumber = "";
+                rowindex = 0;
+            }
+            else
+            {
+                MessageBox.Show("Please enter a value");
+            }
+        }
+
     }
 }
 
